@@ -31,7 +31,7 @@ env:
 jobs:
   build:
     name: Build ${{ matrix.target }}
-    runs-on: ${{ matrix.os }}
+    runs-on: tenki-local-ubuntu-22.04-medium-4c-8g
     strategy:
       fail-fast: false
       matrix:
@@ -107,7 +107,7 @@ jobs:
 
   build-deb:
     name: Build DEB package
-    runs-on: ubuntu-latest
+    runs-on: tenki-local-ubuntu-22.04-medium-4c-8g
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -132,7 +132,7 @@ jobs:
 
   build-rpm:
     name: Build RPM package
-    runs-on: ubuntu-latest
+    runs-on: tenki-local-ubuntu-22.04-medium-4c-8g
     container: fedora:latest
     steps:
       - name: Checkout
@@ -163,7 +163,7 @@ jobs:
   release:
     name: Create Release
     needs: [build, build-deb, build-rpm]
-    runs-on: ubuntu-latest
+    runs-on: tenki-local-ubuntu-22.04-medium-4c-8g
     steps:
       - uses: actions/create-github-app-token@v3
         id: app-token
@@ -221,7 +221,7 @@ jobs:
     name: Notify Discord
     needs: [release]
     if: ${{ !inputs.prerelease }}
-    runs-on: ubuntu-latest
+    runs-on: tenki-local-ubuntu-22.04-medium-4c-8g
     steps:
       - name: Get version
         id: version
@@ -255,7 +255,7 @@ jobs:
     name: Update Homebrew formula
     needs: [release]
     if: ${{ !inputs.prerelease }}
-    runs-on: ubuntu-latest
+    runs-on: tenki-local-ubuntu-22.04-medium-4c-8g
     steps:
       - name: Get version
         id: version
