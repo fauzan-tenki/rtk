@@ -22,7 +22,7 @@ jobs:
     if: >-
       github.ref == 'refs/heads/develop'
       || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/master')
-    runs-on: ubuntu-latest
+    runs-on: tenki-local-ubuntu-22.04-medium-4c-8g
     outputs:
       tag: ${{ steps.tag.outputs.tag }}
     steps:
@@ -31,7 +31,7 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
 
-      - name: Compute version from commits like release please   
+      - name: Compute version from commits like release please
         id: tag
         run: |
           LATEST_TAG=$(git tag -l 'v[0-9]*.[0-9]*.[0-9]*' --sort=-version:refname | grep -v '-' | head -1)
@@ -99,7 +99,7 @@ jobs:
 
   release-please:
     if: github.ref == 'refs/heads/master' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
-    runs-on: ubuntu-latest
+    runs-on: tenki-local-ubuntu-22.04-medium-4c-8g
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
       tag_name: ${{ steps.release.outputs.tag_name }}
@@ -133,7 +133,7 @@ jobs:
     name: Update 'latest' tag
     needs: [release-please, build-release]
     if: ${{ needs.release-please.outputs.release_created == 'true' }}
-    runs-on: ubuntu-latest
+    runs-on: tenki-local-ubuntu-22.04-medium-4c-8g
     steps:
       - uses: actions/create-github-app-token@v3
         id: app-token
