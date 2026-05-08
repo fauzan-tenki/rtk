@@ -6,7 +6,7 @@ on:
 
 jobs:
   check-target:
-    runs-on: ubuntu-latest
+    runs-on: tenki-local-ubuntu-22.04-medium-4c-8g
     # Skip develop→master PRs (maintainer releases)
     if: >-
       github.event.pull_request.base.ref == 'master' &&
